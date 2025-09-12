@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ChatController {
 
-    @GetMapping("/neha")
-    public String getAlert(){
 
-        return "chat";
+    @GetMapping("/signup")
+    public String signUpPage() {
+        return "signup";
+    }
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
     }
 
 
