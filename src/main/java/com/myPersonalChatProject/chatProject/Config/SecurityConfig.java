@@ -20,12 +20,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signup", "/css/**", "/js/**").permitAll() // signup & static files accessible
+                        .requestMatchers("/signup", "/submitSignUp", "/login", "/css/**", "/js/**").permitAll() // signup & static files accessible
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/signup")     // <-- your custom page
-                        .loginProcessingUrl("/doLogin") // where Spring Security listens for POST credentials
+                        .loginPage("/login")     // customlogin page
+                        .loginProcessingUrl("/login") // where Spring Security listens for POST credentials
                         .defaultSuccessUrl("/home", true) // redirect after login
                         .permitAll()
                 )
