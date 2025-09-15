@@ -18,17 +18,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signup", "/submitSignUp", "/login", "/css/**", "/js/**").permitAll() // signup & static files accessible
+        http.csrf().disable().authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/signup", "/submitSignUp","/processLogin", "/login", "/css/**", "/js/**").permitAll() // signup & static files accessible
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")     // customlogin page
-                        .loginProcessingUrl("/login") // where Spring Security listens for POST credentials
-                        .defaultSuccessUrl("/home", true) // redirect after login
+                /*.formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/processLogin")  // 👈 allow Spring to accept your custom URL
                         .permitAll()
-                )
+                )*/
                 .logout(logout -> logout.permitAll());
 
         return http.build();

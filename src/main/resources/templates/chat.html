@@ -1,21 +1,172 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Spring Boot Chat</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          display: flex;
+          flex-direction: column; /* <--- important: header on top, main below */
+          height: 100vh;
+          background: #f0f2f5;
+        }
+
+        .userHeader {
+          width: 100%;               /* span full width */
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #f0f0f0;
+          color: white;
+          padding: 10px 15px;
+        }
+        .userHeader h4 { margin: 0; color:black;}
+
+        .settings-icon{
+        font-size:20px;
+        cursor:pointer;
+        transition:transform 0.2s ease;
+        color:black;
+        margin:5px;
+        }
+        .settings-icon:hover{
+        transform: rotate(90deg);
+        }
+
+        /* main area: sidebar + chat horizontally */
+        .main {
+          display: flex;
+          flex: 1;                   /* fill remaining height */
+          min-height: 0;            /* allows children to scroll correctly */
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: 25%;
+          background: #fff;
+          border-right: 1px solid #ddd;
+          display: flex;
+          flex-direction: column;
+        }
+        .search-bar { padding: 10px; border-bottom: 1px solid #ddd; }
+        .search-bar input { width:100%; padding:8px; border-radius:20px; border:1px solid #ccc; }
+        .contacts { flex: 1; overflow-y: auto; }
+        .contact { padding:10px; cursor:pointer; border-bottom:1px solid #eee; }
+        .contact:hover { background:#f9f9f9; }
+
+        /* Chat Area */
+        .chat-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          background: #e5ddd5;
+          min-width: 0;             /* prevents overflow problems */
+        }
+        .chat-header {
+          padding: 10px;
+          background: #075E54;
+          color: white;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .chat-messages {
+          flex: 1;
+          padding: 10px;
+          overflow-y: auto;
+          /* allow children to wrap properly */
+        }
+        .message {
+          margin: 5px 0;
+          padding: 8px 12px;
+          border-radius: 15px;
+          max-width: 60%;
+          display: inline-block;
+          clear: both;
+        }
+        .sent { background: #dcf8c6; float: right; }
+        .received { background: white; float: left; }
+        .timestamp { font-size:10px; color:#555; display:block; margin-top:2px; }
+
+        /* Input Bar */
+        .chat-input {
+          display: flex;
+          padding: 10px;
+          background: #f0f0f0;
+          border-top: 1px solid #ddd;
+        }
+        .chat-input input { flex:1; padding:10px; border-radius:20px; border:1px solid #ccc; }
+        .chat-input button {
+          margin-left:10px; padding:10px 15px; border:none; border-radius:50%;
+          background:#075E54; color:white; cursor:pointer;
+        }
+    </style>
 </head>
 <body>
-<H1>
-This is a sample chat project!!!
-</H1>
-<div>
-<p th:text="${customerName}"></p>
+
+<div class="userHeader">
+    <h4 id="chat-user">User Name</h4>
+    <div>
+        <i class="fa-solid fa-bell settings-icon"></i>
+        <i class="fa fa-cog settings-icon"></i>
+    </div>
+
+
 </div>
-<div>
-    <form th:action="@{/neha}" method="post">
-        <input type="text" name="name" placeholder="Enter your message"/>
-        <button type="submit">Submit</button>
-    </form>
+
+<div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="search-bar">
+            <input type="text" placeholder="Search or start new chat">
+        </div>
+        <div class="contacts">
+            <div class="contact">John</div>
+            <div class="contact">Sarah</div>
+            <div class="contact">Project Team</div>
+        </div>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <span id="chatUser">John</span>
+            <span>Online</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message received">Hey, how are you?<span class="timestamp">10:30 AM</span></div>
+            <div class="message sent">I’m good! Working on Spring Boot 😊<span class="timestamp">10:32 AM</span></div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const chatBox = document.getElementById("chatMessages");
+      const newMsg = document.createElement("div");
+      newMsg.className = "message sent";
+      newMsg.innerHTML = msg + "<span class='timestamp'>" +
+        new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) +
+        "</span>";
+      chatBox.appendChild(newMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      input.value = "";
+    }
+</script>
+
 </body>
 </html>
