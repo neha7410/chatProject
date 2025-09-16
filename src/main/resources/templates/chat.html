@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -16,7 +17,9 @@
           height: 100vh;
           background: #f0f2f5;
         }
-
+        .top-0 {
+            top: 10px !important;
+        }
         .userHeader {
           width: 100%;               /* span full width */
           display: flex;
@@ -110,14 +113,31 @@
 </head>
 <body>
 
-<div class="userHeader">
+<div class="userHeader d-flex justify-content-between align-items-center">
     <h4 id="chat-user">User Name</h4>
-    <div>
-        <i class="fa-solid fa-bell settings-icon"></i>
+    <div class="d-flex align-items-center">
+        <!-- Bell with notification dot -->
+        <div class="position-relative me-3">
+            <i class="fa-solid fa-bell settings-icon"
+               id="bellPopover"
+               tabindex="0"
+               role="button"
+               data-bs-toggle="popover"
+               data-bs-html="true"
+               data-bs-trigger="focus"
+               data-bs-placement="bottom"
+               data-bs-content=" You have 2 reaquests"
+               style="font-size:20px; cursor:pointer;"
+            ></i>
+
+            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+            </span>
+        </div>
+
+        <!-- Settings icon -->
         <i class="fa fa-cog settings-icon"></i>
     </div>
-
-
 </div>
 
 <div class="main">
@@ -167,6 +187,14 @@
       input.value = "";
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+      [...popoverTriggerList].forEach(el => new bootstrap.Popover(el));
+    });
+</script>
+
 
 </body>
 </html>

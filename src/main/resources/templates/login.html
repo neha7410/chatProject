@@ -3,12 +3,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Chat App</title>
+
+    <style>
+        .containerHeading {
+            position: relative;               /* needed for z-index */
+            z-index: 10;                      /* bring it upfront */
+
+            text-align: center;               /* center text horizontally */
+            padding: 0px;
+            margin: 0px auto;
+            width: 60%;                       /* adjust width as per need */
+
+            background: rgba(255, 255, 255, 0.2); /* light transparent background */
+            color: black;                     /* text color */
+
+            border-radius: 15px;              /* rounded corners */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* subtle shadow */
+            backdrop-filter: blur(10px);   /* glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-<div>
-    <h1>Hello, Name </h1>
+<div class="containerHeading">
+    <h1>Chat App  </h1>
 </div>
 
 <section class="vh-100">

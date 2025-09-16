@@ -24,7 +24,7 @@ public class SecurityConfig {
                 )
                 /*.formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/processLogin")  // 👈 allow Spring to accept your custom URL
+                        .loginProcessingUrl("/processLogin")  // ovveridigthemethod
                         .permitAll()
                 )*/
                 .logout(logout -> logout.permitAll());
